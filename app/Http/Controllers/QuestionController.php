@@ -15,41 +15,35 @@ use Illuminate\Support\Facades\Response;
 
 class QuestionController extends SiteController
 {
-    public function __construct(QuestionsRepository $ques_rep)
+    public function __construct(QuestionsRepository $questionRepository)
     {
         parent::__construct(new MenuRepository(new \FAQ\Category));
         $this->template = env('THEME').'.questions';
-        $this->ques_rep = $ques_rep;
+        $this->questionRepository = $questionRepository;
         $this->vars = TRUE;
-
     }
 
     //Просмотр конкретного вопроса
-    public function show($id = FALSE)
+    public function show($id)
     {
-        $question = $this->ques_rep->one($id, ['answer' => TRUE]);
-        //dd($question);   //view
+        $question = $this->questionRepository->one($id, ['answer' => TRUE]);
         $content = view(env('THEME').'.question')->with('question', $question)->render();
         $this->vars = array_add($this->vars,'content', $content);
-
         return $this->renderOutput();
     }
     //Пользователь может задать вопрос
     public function store(Request $request)
     {
         $data = $request->all();
-        //$data['category_id'] = $request->input('question_post_ID');
-        //print_r($data);
         $validator = Validator::make($data, [
             'category_id' => 'integer|required',
             'title' => 'string|required',
             'text' => 'string|required',
             'name' => 'required|max:255',
-            'email' => 'required|max:255'
+            'email' => 'required|email|max:255'
         ]);
 
         if($validator->fails()) {
-            //return Response::json(['error'=>$validator->errors()->all()]);
             return Redirect::back()->withErrors($validator)->withInput();
         }
         $author = new Author($data);

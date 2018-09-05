@@ -14,19 +14,16 @@ abstract class Repository
 {
     protected $model = FALSE;
 
-    public function get() {
+    public function get()
+    {
         $builder = $this->model->select('*');
-        //dd($builder);
         return $builder->get();
     }
 
-    public  function one($id, $attr = array()) {
+    public  function one($id, $attr = array())
+    {
         $result = $this->model->where('id',$id)->first();
         return $result;
     }
-
-
-
-
 
 }

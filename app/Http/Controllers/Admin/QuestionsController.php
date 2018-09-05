@@ -2,103 +2,85 @@
 
 namespace FAQ\Http\Controllers\Admin;
 
-use FAQ\Author;
-use FAQ\Category;
 use FAQ\Repositories\CategoryRepository;
 use FAQ\Repositories\QuestionsRepository;
-use Illuminate\Http\Request;
-use FAQ\Question;
-use FAQ\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class QuestionsController extends AdminController
 {
-    public function __construct(QuestionsRepository $ques_rep, CategoryRepository $cat_rep)
+    public function __construct(QuestionsRepository $questionRepository, CategoryRepository $categoryRepository)
     {
         parent::__construct();
 
         $this->template = env('THEME') . '.admin.questions';
-
-        $this->ques_rep = $ques_rep;
-
-        $this->cat_rep = $cat_rep;
-
+        $this->questionRepository = $questionRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->content = TRUE;
     }
 
-
     //Просматривать вопросы в каждой теме. По каждому вопросу видно дату создания, статус (ожидает ответа / опубликован / скрыт).
-    public function index()
+    public function index(Request $request)
     {
         $this->title = 'Управление вопросами';
 
         $questions = $this->getQuestions();
-//        $questions->load(['category' => function($query) {
-//            $query->orderBy('title', 'desc');
-//        }]);
+        if($request->has('sortByStatus')) {
+            $questions = $this->questionRepository->sortByStatus($questions);
+        }
 
-        //dd($questions);
-
+        if($request->has('sortByDate')) {
+            $questions = $this->questionRepository->sortByDate($questions);
+        }
         $this->content = view(env('THEME').'.admin.questions_content')->with('questions',$questions)->render();
 
         return $this->renderOutput();
     }
 
     public function getQuestions() {
-        return $this->ques_rep->get();
-    }
-
-    public function create()
-    {
-    }
-
-
-    public function store(Request $request)
-    {
+        return $this->questionRepository->questionsWithCategory();
     }
 
     //Просмотреть вопрос и добавить ответ
     public function show($id)
     {
         $this->title = 'Вопрос';
-
-        $question = $this->ques_rep->one($id, ['answer' => TRUE]);
-        //dd($question);   //view
+        $question = $this->questionRepository->one($id, ['answer' => TRUE]);
         $this->content = view(env('THEME').'.admin.question')->with('question', $question)->render();
         return $this->renderOutput();
     }
 
-    //Редактировать автора, текст вопроса и текст ответа.
-    //Перемещать вопрос из одной темы в другую.
-    //Публиковать скрытые вопросы.
-    //Скрывать опубликованные вопросы
+    //----Редактировать автора, текст вопроса и текст ответа.
+    //----Перемещать вопрос из одной темы в другую.
+    //----Публиковать скрытые вопросы.
+    //----Скрывать опубликованные вопросы
     public function edit($id)
     {
         $this->title = 'Редактор вопросов';
-
-        $question = $this->ques_rep->one($id, ['answer' => TRUE, 'category' => TRUE, 'author' => TRUE]);
-
-        $categories = $this->cat_rep->get('id','title');
-
-        $cat_select = array();
+        $question = $this->questionRepository->one($id, ['answer' => TRUE, 'category' => TRUE, 'author' => TRUE]);
+        $categories = $this->categoryRepository->get('id','title');
+        $categorySelect = array();
+        $statuses = [
+            'Ожидает ответ' => 'Ожидает ответ',
+            'Опубликован' => 'Опубликован',
+            'Скрыт' => 'Скрыт'
+        ];
 
         foreach ($categories as $category) {
-            $cat_select[$category->id] = $category->title;
+            $categorySelect[$category->id] = $category->title;
         }
-        $this->content = view(env('THEME').'.admin.question_edit')->with(['categories' => $cat_select, 'question' => $question])->render();
-
+        $this->content = view(env('THEME').'.admin.question_edit')->with(['categories' => $categorySelect, 'question' => $question, 'statuses' => $statuses])->render();
         return $this->renderOutput();
-
     }
 
     public function update(Request $request, $id)
     {
         $data = $request->all();
-
         $validator = Validator::make($data, [
             'question_title' => 'required|max:255',
             'question_text' => 'string|required',
-            'answer_id' => 'integer|required',
+            'answer_id' => 'integer',
             'answer_text' => 'sometimes|string',
             'author_id' => 'integer|required',
             'author_name' => 'required|max:255',
@@ -108,10 +90,9 @@ class QuestionsController extends AdminController
         ]);
 
         if($validator->fails()) {
-            //
+            return Redirect::back()->withErrors($validator)->withInput();
         }
-
-        $question = $this->ques_rep->one($id, ['answer' => TRUE, 'author' => TRUE]);
+        $question = $this->questionRepository->one($id, ['answer' => TRUE, 'author' => TRUE]);
         $question->update([
             'title' => $data['question_title'],
             'text' => $data['question_text'],
@@ -124,19 +105,18 @@ class QuestionsController extends AdminController
                 'text' => $data['answer_text']
             ]);
         }
-
         $question->author->update([
             'name' => $data['author_name'],
             'email' => $data['author_email']
         ]);
-
-
         return redirect('/admin/questions');
     }
 
 
     public function destroy($id)
     {
-        //
+        $question = $this->questionRepository->one($id, ['answer' => TRUE, 'author' => TRUE]);
+        $question->delete();
+        return redirect('/admin/questions');
     }
 }

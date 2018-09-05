@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="{{asset(env('THEME'))}}/css/style.css"> <!-- Resource style -->
     <script src="{{asset(env('THEME'))}}/js/modernizr.js"></script> <!-- Modernizr -->
 
-    <title>FAQ</title>
+    <title>Сервис вопросов и ответов</title>
 </head>
 <body>
 <header>
-    <h1>FAQ</h1>
+    <h1>Сервис вопросов и ответов</h1>
 </header>
 
 

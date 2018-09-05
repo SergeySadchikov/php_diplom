@@ -10,7 +10,8 @@ class Author extends Model
         'name', 'email'
     ];
 
-    public function questions() {
+    public function question()
+    {
         return $this->hasMany('FAQ\Question');
     }
 }

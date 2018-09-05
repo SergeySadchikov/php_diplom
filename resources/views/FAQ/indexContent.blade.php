@@ -1,3 +1,4 @@
+
 <div class="cd-faq-items">
     <ul id="basics" class="cd-faq-group">
         <li class="cd-faq-title"><h2>Basics</h2></li>
@@ -206,3 +207,54 @@
         </li>
     </ul> <!-- cd-faq-group -->
 </div> <!-- cd-faq-items -->
+
+
+
+{!! Form::open(array('route' => array('add.store'),'method'=> 'POST','enctype'=>'multipart/form-data')) !!}
+<ul>
+
+    <li>
+        <label>
+            <span><b>Как вас зовут?</b></span>
+            {!! Form::text('name','',['placeholder' => 'имя']) !!}
+        </label>
+    </li>
+    <li>
+        <label>
+            <span><b>Ваш email:</b></span>
+            {!! Form::text('email','',['placeholder' => 'email']) !!}
+        </label>
+    </li>
+    <li>
+        <lablel>
+            <span>Выбирите тему</span>
+            {!! Form::select('category_id', $categorySelect, '0')!!}
+        </lablel>
+    </li>
+    <li>
+        <label>
+            <span><b>Краткое описание:</b></span>
+            {!! Form::text('title','',['placeholder' => 'Заголовок']) !!}
+        </label>
+    </li>
+    <li>
+        <label>
+            <span><b>Содержание:</b></span>
+            {!! Form::textarea('text','',['placeholder' => 'Описание']) !!}
+        </label>
+    </li>
+    <li>
+        {!! Form::button('Отправить', ['type'=>'submit']) !!}
+    </li>
+</ul>
+{{ Form::close() }}
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif

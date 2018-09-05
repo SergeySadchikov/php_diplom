@@ -53,8 +53,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('/',['uses' => 'Admin\IndexController@index', 'as' => 'adminIndex']);
 
     Route::resource('/categories', 'Admin\CategoriesController');
+
     Route::resource('/questions', 'Admin\QuestionsController');
     Route::resource('/reply', 'Admin\AnswerController');
+    Route::resource('/admins', 'Admin\AdminsController');
+    Route::post('/questions', 'Admin\QuestionsController@index')->name('filter');
 
 
 });

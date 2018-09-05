@@ -14,8 +14,9 @@ class ChangeAuthorsTable extends Migration
     public function up()
     {
         Schema::table('authors', function (Blueprint $table) {
-            $table->timestamps();
+            $table->dropUnique('authors_email_unique')->change();
         });
+
     }
 
     /**
@@ -26,7 +27,7 @@ class ChangeAuthorsTable extends Migration
     public function down()
     {
         Schema::table('authors', function (Blueprint $table) {
-            $table->dropTimestamps();
+            //
         });
     }
 }

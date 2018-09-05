@@ -14,6 +14,7 @@ class ChangeAnswersTable extends Migration
     public function up()
     {
         Schema::table('answers', function (Blueprint $table) {
+
             $table->integer('question_id')->unsigned()->default(1);
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
 
@@ -30,7 +31,7 @@ class ChangeAnswersTable extends Migration
     public function down()
     {
         Schema::table('answers', function (Blueprint $table) {
-        //
+            //
         });
     }
 }

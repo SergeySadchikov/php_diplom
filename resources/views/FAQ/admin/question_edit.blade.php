@@ -1,4 +1,3 @@
-{{--{!! Form::open([['route' => ['questions.update',$question->id]],'class'=>'contact-form','method'=>'POST','enctype'=>'multipart/form-data']) !!}--}}
 {!! Form::open(array('route' => array('questions.update', $question->id),'method'=> 'POST','enctype'=>'multipart/form-data')) !!}
 @method('PUT')
 <ul>
@@ -32,12 +31,12 @@
     </li>
     <label>
         <span><b>Статус</b></span>
-        {!! Form::text('status', $question->status) !!}
+        {!! Form::select('status', $statuses, $question->status)!!}
     </label>
     <li>
         <lablel>
             <span>Сменить тему</span>
-            {!! Form::select('category_id', $categories, $question->category_id); !!}
+            {!! Form::select('category_id', $categories, $question->category_id)!!}
         </lablel>
     </li>
     <li>>
@@ -48,3 +47,13 @@
 </ul>
 
 {{ Form::close() }}
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif

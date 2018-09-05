@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
-class ChangeQuestionssTable extends Migration
+
+class ChangeQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class ChangeQuestionssTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::table('questions', function (Blueprint $table) {
 
-            $table->integer('answer_id')->unsigned()->default(NULL);
-            $table->foreign('answer_id')->references('id')->on('answers');
+            $table->integer('category_id')->unsigned()->default(1);
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
-
+            $table->integer('author_id')->unsigned()->default(1);
+            $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
         });
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -33,7 +31,7 @@ class ChangeQuestionssTable extends Migration
     public function down()
     {
         Schema::table('questions', function (Blueprint $table) {
-           $table->dropColumn('answer_id');
+            //
         });
     }
 }
