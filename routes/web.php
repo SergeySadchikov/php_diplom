@@ -15,15 +15,9 @@ Route::resource('/', 'IndexController',[
     'name'=>['home']
 ]);
 
-Route::resource('questions', 'QuestionController')->only(['show']);
+Route::resource('question', 'QuestionController')->only(['show']);
+
 Route::resource('/add', 'QuestionController')->only(['store']);
-
-
-
-Route::resource('answer','AnswerController',[
-    'only'=>['store']
-]);
-
 
 Auth::routes();
 
@@ -35,18 +29,8 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 /**
- * Маршруты регистрации...
- */
-
-//страница с формой Laravel регистрации пользователей
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-//POST запрос регистрации на сайте
-Route::post('register', 'Auth\RegisterController@register');
-
-/**
  * Маршруты admin
  */
-
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 

@@ -33,8 +33,5 @@ class IndexController extends SiteController
         $categories = $this->categoryRepository->get(['id', 'title']);
         return $categories;
     }
-
-
-
 }
 

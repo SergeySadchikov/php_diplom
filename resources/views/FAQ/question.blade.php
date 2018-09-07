@@ -1,3 +1,24 @@
-<div class="cd-faq">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae quidem blanditiis delectus corporis, possimus officia sint sequi ex tenetur id impedit est pariatur iure animi non a ratione reiciendis nihil sed consequatur atque repellendus fugit perspiciatis rerum et. Dolorum consequuntur fugit deleniti, soluta fuga nobis. Ducimus blanditiis velit sit iste delectus obcaecati debitis omnis, assumenda accusamus cumque perferendis eos aut quidem! Aut, totam rerum, cupiditate quae aperiam voluptas rem inventore quas, ex maxime culpa nam soluta labore at amet nihil laborum? Explicabo numquam, sit fugit, voluptatem autem atque quis quam voluptate fugiat earum rem hic, reprehenderit quaerat tempore at. Aperiam.</p>
-</div> <!-- cd-faq-content -->
+@extends (env('THEME').'.layouts.site')
+@section('more')
+    @if($question)
+        <div class="card">
+            <h5 class="card-header font-weight-bold">Вопрос:</h5>
+            <div class="card-body">
+                <h5 class="card-title font-weight-bold"><b>{{$question->title}}</b></h5>
+                <p class="card-text">{{$question->text}}</p>
+            </div>
+        </div>
+        @if($question->answer)
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title font-weight-bold"><b>Ответ:</b></h5>
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>{{$question->answer->text}}</p>
+                    </blockquote>
+                </div>
+            </div>
+        @endif
+    @endif
+@endsection

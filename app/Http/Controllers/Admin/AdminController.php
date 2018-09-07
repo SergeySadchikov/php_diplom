@@ -37,9 +37,9 @@ class AdminController extends \FAQ\Http\Controllers\Controller
     public function getMenu()
     {
          return \Menu::make('adminMenu',function ($menu) {
-            $menu->add('Администраторы', array('route' => 'admins.index'));
-            $menu->add('Темы', array('route' => 'categories.index'));
-            $menu->add('Вопросы', array('route' => 'questions.index'));
+            $menu->add('Администраторы', array('route' => 'admins.index', 'class' => "nav-item nav-link active bg-secondary badge badge-secondary"));
+            $menu->add('Темы', array('route' => 'categories.index', 'class' => "nav-item nav-link active bg-secondary badge badge-secondary"));
+            $menu->add('Вопросы', array('route' => 'questions.index', 'class' => "nav-item nav-link active bg-secondary badge badge-secondary"));
         });
     }
 }

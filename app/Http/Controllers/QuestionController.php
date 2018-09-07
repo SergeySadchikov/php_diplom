@@ -18,17 +18,16 @@ class QuestionController extends SiteController
     public function __construct(QuestionsRepository $questionRepository)
     {
         parent::__construct(new MenuRepository(new \FAQ\Category));
-        $this->template = env('THEME').'.questions';
+        $this->template = env('THEME').'.question';
         $this->questionRepository = $questionRepository;
-        $this->vars = TRUE;
+
     }
 
     //Просмотр конкретного вопроса
     public function show($id)
     {
         $question = $this->questionRepository->one($id, ['answer' => TRUE]);
-        $content = view(env('THEME').'.question')->with('question', $question)->render();
-        $this->vars = array_add($this->vars,'content', $content);
+        $this->vars = array_add($this->vars,'question', $question);
         return $this->renderOutput();
     }
     //Пользователь может задать вопрос

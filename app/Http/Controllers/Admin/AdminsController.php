@@ -68,9 +68,9 @@ class AdminsController extends AdminController
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email,'.$id,
         ]);
-        $validator->sometimes('password', 'required|min:5|confirmed', function ($input)
+        $validator->sometimes('password', 'required|min:5|confirmed', function ($data)
         {
-            if (!empty($input->password)) {
+            if (isset($data['password'])) {
                 return TRUE;
             }
             return FALSE;
@@ -83,15 +83,15 @@ class AdminsController extends AdminController
             $data['password'] = bcrypt($data['password']);
         }
         $admin = $this->adminsRepository->one($id);
-        $admin->fill($data)->update();
+        $admin->update($data);
         return  redirect('admin/admins');
 
     }
 
     public function destroy($id)
     {
-        $question = $this->adminsRepository->one($id);
-        $question->delete();
+        $admin = $this->adminsRepository->one($id);
+        $admin->delete();
         return redirect('/admin/admins');
     }
 }

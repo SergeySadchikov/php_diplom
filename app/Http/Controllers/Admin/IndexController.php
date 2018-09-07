@@ -4,6 +4,7 @@ namespace FAQ\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use FAQ\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends AdminController
 {
@@ -12,9 +13,11 @@ class IndexController extends AdminController
         parent::__construct();
         $this->template = env('THEME').'.admin.index';
     }
-
-    public function index() {
-        $this->title = 'Панель администратора';
+    public function index()
+    {
+        $user = Auth::user();
+        $username = $user->name;
+        $this->title = 'Добро пожаловать, '.$username;
         return $this->renderOutput();
     }
 }
