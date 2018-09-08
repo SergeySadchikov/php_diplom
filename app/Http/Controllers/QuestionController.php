@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 
 class QuestionController extends SiteController
 {
@@ -54,6 +55,7 @@ class QuestionController extends SiteController
         $category = Category::find($data['category_id']);
         $category->questions()->save($question);
 
+        Session::flash('status','Спасибо за ваш вопрос! Администратор вскоре опубликует его!');
         return Redirect::back();
     }
 }

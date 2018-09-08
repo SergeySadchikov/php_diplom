@@ -1,5 +1,11 @@
-@if($categories)
+@if(!$categories->isEmpty())
     <div class="cd-faq-items">
+        @if (Session::has('status'))
+            <div class="alert alert-success">
+                <h1 class="text-success font-weight-bold">{{ Session::get('status') }}</h1>
+            </div>
+        @endif
+
     @foreach($categories as $category)
             @if(!$category->getPublishedQuestions()->isEmpty())
                 <ul id="{{$category->title}}" class="cd-faq-group">
@@ -21,7 +27,6 @@
             @endif
     @endforeach
 
-@endif
 
     <div id="add" class="container bg-dark fixed">
         {!! Form::open(array('route' => array('add.store'),'method'=> 'POST','enctype'=>'multipart/form-data')) !!}
@@ -41,3 +46,9 @@
         {{ Form::close() }}
     </div>
 </div>
+
+@else
+    <div class="container-fluid">
+        <h1 class="header h1 text-info font-weight-bold">Извините, но наш сайт пока что пуст!</h1>
+    </div>
+@endif

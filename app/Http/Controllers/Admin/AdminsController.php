@@ -7,6 +7,7 @@ use FAQ\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use FAQ\Answer;
 
 class AdminsController extends AdminController
 {
@@ -63,33 +64,43 @@ class AdminsController extends AdminController
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
+        if(!empty($request->input('password'))) {
+            $data = $request->all();
+        } else {
+            $data = $request->except(['password','password_confirmation']);
+        }
         $validator = Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email,'.$id,
+            'email' => 'required|email|max:255|unique:users,email,' . $id
         ]);
-        $validator->sometimes('password', 'required|min:5|confirmed', function ($data)
+        $validator->sometimes('password', 'required|min:5|confirmed', function ($input)
         {
-            if (isset($data['password'])) {
+            if (!empty($input->password)) {
                 return TRUE;
             }
             return FALSE;
-        });
 
-        if($validator->fails()) {
+        });
+        if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-        if(isset($data['password'])) {
+        if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         }
         $admin = $this->adminsRepository->one($id);
         $admin->update($data);
-        return  redirect('admin/admins');
-
+        return redirect('admin/admins');
     }
-
     public function destroy($id)
     {
+        $answers = Answer::where('user_id', $id)->get();
+        if (!$answers->isEmpty()) {
+            foreach ($answers as $answer) {
+                $answer->question->update([
+                    'status' => 'Ожидает ответ'
+                ]);
+            }
+        }
         $admin = $this->adminsRepository->one($id);
         $admin->delete();
         return redirect('/admin/admins');

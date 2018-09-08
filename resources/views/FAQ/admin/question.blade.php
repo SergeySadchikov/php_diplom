@@ -1,3 +1,4 @@
+@if($question)
 <div class="card">
     <h5 class="card-header font-weight-bold">Вопрос:</h5>
     <div class="card-body">
@@ -5,6 +6,7 @@
         <p class="card-text">{{$question->text}}</p>
     </div>
 </div>
+@endif
 
 @if($question->answer)
 <div class="card">
