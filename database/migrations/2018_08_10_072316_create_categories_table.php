@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateCategoriesTable extends Migration
 {
@@ -26,9 +27,8 @@ class CreateCategoriesTable extends Migration
      * @return void
      */
     public function down()
-    {
-        Schema::table('categories', function (Blueprint $table) {
-
-        });
+    {   DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::dropIfExists('categories');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
