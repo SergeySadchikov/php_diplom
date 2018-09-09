@@ -7,10 +7,10 @@ http://www.ck36474.tmweb.ru/
 ## Как развернуть приложение?
 
 ### Что нам нужно?
-1. Хостинг с доступом по SSH и СУБД MySQL[TIMEWEB](http://timeweb.com)
-2. PHP 7.0 и выше(http://php.net/)
-3. Composer(https://getcomposer.org/)
-4. GIT(http://timeweb.com)
+1. Хостинг с доступом по SSH и СУБД MySQL Например: [TIMEWEB](http://timeweb.com)
+2. [PHP 7.0](http://php.net/) и выше
+3. [Composer](https://getcomposer.org/)
+4. [GIT](http://timeweb.com)
 
 ### Подготовка к установке  
 
