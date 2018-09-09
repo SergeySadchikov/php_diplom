@@ -12,7 +12,7 @@ class IndexController extends SiteController
     {
         parent::__construct(new MenuRepository(new \FAQ\Category));
         $this->categoryRepository = $categoryRepository;
-        $this->template = env('THEME').'.index';
+        $this->template = config('app.theme').'.index';
     }
 
     public function index()
@@ -23,7 +23,7 @@ class IndexController extends SiteController
         foreach ($categories as $category) {
             $categorySelect[$category->id] = $category->title;
         }
-        $indexContent = view(env('THEME').'.indexContent')->with(['categories' => $categories, 'categorySelect' => $categorySelect])->render();
+        $indexContent = view(config('app.theme').'.indexContent')->with(['categories' => $categories, 'categorySelect' => $categorySelect])->render();
         $this->vars = array_add($this->vars, 'indexContent', $indexContent);
         return $this->renderOutput();
     }

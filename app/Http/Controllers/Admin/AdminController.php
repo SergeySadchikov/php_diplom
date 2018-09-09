@@ -25,7 +25,7 @@ class AdminController extends \FAQ\Http\Controllers\Controller
     {
         $this->vars = array_add($this->vars,'title', $this->title);
         $menu = $this->getMenu();
-        $navigation = view(env('THEME').'.admin.navigation')->with('menu',$menu)->render();
+        $navigation = view(config('app.theme').'.admin.navigation')->with('menu',$menu)->render();
         $this->vars = array_add($this->vars,'navigation', $navigation);
 
         if($this->content) {

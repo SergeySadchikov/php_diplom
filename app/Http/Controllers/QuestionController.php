@@ -19,7 +19,7 @@ class QuestionController extends SiteController
     public function __construct(QuestionsRepository $questionRepository)
     {
         parent::__construct(new MenuRepository(new \FAQ\Category));
-        $this->template = env('THEME').'.question';
+        $this->template = config('app.theme').'.question';
         $this->questionRepository = $questionRepository;
 
     }

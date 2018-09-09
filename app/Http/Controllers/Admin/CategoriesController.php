@@ -16,7 +16,7 @@ class CategoriesController extends AdminController
     public function __construct(CategoryRepository $categoryRepository)
     {
         parent::__construct();
-        $this->template = env('THEME').'.admin.categories';
+        $this->template = config('app.theme').'.admin.categories';
         $this->categoryRepository = $categoryRepository;
     }
 
@@ -24,7 +24,7 @@ class CategoriesController extends AdminController
     {
         $this->title = 'Управление темами';
         $categories = $this->categoryRepository->get();
-        $this->content = view(env('THEME').'.admin.categories_content')->with('categories', $categories)->render();
+        $this->content = view(config('app.theme').'.admin.categories_content')->with('categories', $categories)->render();
         return $this->renderOutput();
     }
 
@@ -40,7 +40,7 @@ class CategoriesController extends AdminController
         } else {
             $questions = $category->questions;
         }
-        $this->content =  view(env('THEME').'.admin.category_questions')->with('category', $category)->with('questions', $questions)->render();
+        $this->content =  view(config('app.theme').'.admin.category_questions')->with('category', $category)->with('questions', $questions)->render();
         return $this->renderOutput();
     }
 

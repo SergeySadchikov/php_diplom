@@ -15,21 +15,21 @@ class AdminsController extends AdminController
     {
         parent::__construct();
         $this->adminsRepository = $adminsRepository;
-        $this->template = env('THEME').'.admin.admins';
+        $this->template = config('app.theme').'.admin.admins';
     }
 
     public function index()
     {
         $this->title = 'Управление адиминистраторами';
         $admins = $this->adminsRepository->get();
-        $this->content = view(env('THEME').'.admin.admins_index')->with('admins', $admins)->render();
+        $this->content = view(config('app.theme').'.admin.admins_index')->with('admins', $admins)->render();
         return $this->renderOutput();
     }
 
     public function create()
     {
         $this->title = 'Создать нового администратора';
-        $this->content = view(env('THEME').'.admin.admins_create')->render();
+        $this->content = view(config('app.theme').'.admin.admins_create')->render();
         return $this->renderOutput();
     }
 
@@ -58,7 +58,7 @@ class AdminsController extends AdminController
     {
         $this->title = 'Изменить админминистратора';
         $admin = $this->adminsRepository->one($id);
-        $this->content = view(env('THEME').'.admin.admins_create')->with('admin', $admin)->render();
+        $this->content = view(config('app.theme').'.admin.admins_create')->with('admin', $admin)->render();
         return $this->renderOutput();
     }
 

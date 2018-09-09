@@ -14,7 +14,7 @@ class QuestionsController extends AdminController
     {
         parent::__construct();
 
-        $this->template = env('THEME') . '.admin.questions';
+        $this->template = config('app.theme') . '.admin.questions';
         $this->questionRepository = $questionRepository;
         $this->categoryRepository = $categoryRepository;
         $this->content = TRUE;
@@ -33,7 +33,7 @@ class QuestionsController extends AdminController
         if($request->has('sortByDate')) {
             $questions = $this->questionRepository->sortByDate($questions);
         }
-        $this->content = view(env('THEME').'.admin.questions_content')->with('questions',$questions)->render();
+        $this->content = view(config('app.theme').'.admin.questions_content')->with('questions',$questions)->render();
 
         return $this->renderOutput();
     }
@@ -47,7 +47,7 @@ class QuestionsController extends AdminController
     {
         $this->title = 'Вопрос';
         $question = $this->questionRepository->one($id, ['answer' => TRUE]);
-        $this->content = view(env('THEME').'.admin.question')->with('question', $question)->render();
+        $this->content = view(config('app.theme').'.admin.question')->with('question', $question)->render();
         return $this->renderOutput();
     }
 
@@ -70,7 +70,7 @@ class QuestionsController extends AdminController
         foreach ($categories as $category) {
             $categorySelect[$category->id] = $category->title;
         }
-        $this->content = view(env('THEME').'.admin.question_edit')->with(['categories' => $categorySelect, 'question' => $question, 'statuses' => $statuses])->render();
+        $this->content = view(config('app.theme').'.admin.question_edit')->with(['categories' => $categorySelect, 'question' => $question, 'statuses' => $statuses])->render();
         return $this->renderOutput();
     }
 

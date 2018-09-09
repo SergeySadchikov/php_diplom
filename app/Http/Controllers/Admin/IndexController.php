@@ -11,7 +11,7 @@ class IndexController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->template = env('THEME').'.admin.index';
+        $this->template = config('app.theme').'.admin.index';
     }
     public function index()
     {

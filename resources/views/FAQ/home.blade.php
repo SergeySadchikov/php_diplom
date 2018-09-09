@@ -1,4 +1,4 @@
-@extends (env('THEME').'.layouts.admin')
+@extends (config('app.theme').'.layouts.admin')
 
 @section('content')
 <div class="container">
