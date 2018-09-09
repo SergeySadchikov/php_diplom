@@ -12,6 +12,6 @@ class Author extends Model
 
     public function question()
     {
-        return $this->hasMany('FAQ\Question');
+        return $this->hasOne('FAQ\Question');
     }
 }
