@@ -1,10 +1,13 @@
 # Сервис вопросов и ответов
+
 http://www.ck36474.tmweb.ru/
+
 Описание приложения(https://docs.google.com/document/d/1eU0l8pTWUlheK5jX9dCd9WcrHYp-vL-gG-0NCNOZr9s/edit?usp=sharing)
+
 ## Как развернуть приложение?
 
 ### Что нам нужно?
-1. Хостинг с доступом по SSH и СУБД MySQL(http://timeweb.com)
+1. Хостинг с доступом по SSH и СУБД MySQL[TIMEWEB](http://timeweb.com)
 2. PHP 7.0 и выше(http://php.net/)
 3. Composer(https://getcomposer.org/)
 4. GIT(http://timeweb.com)
