@@ -2,7 +2,7 @@
 
 http://www.ck36474.tmweb.ru/
 
-Описание приложения(https://docs.google.com/document/d/1eU0l8pTWUlheK5jX9dCd9WcrHYp-vL-gG-0NCNOZr9s/edit?usp=sharing)
+[Описание приложения](https://docs.google.com/document/d/1eU0l8pTWUlheK5jX9dCd9WcrHYp-vL-gG-0NCNOZr9s/edit?usp=sharing)
 
 ## Как развернуть приложение?
 
@@ -31,7 +31,7 @@ alias composer='/opt/php71/bin/php -d memory_limit=500M /home/ваша дире�
 ```
 
 3. Создаем БД на вашем хостинге
-   Если требуется меняем движок БД на InnoDB(https://dev.mysql.com/doc/refman/8.0/en/storage-engine-setting.html), или используем дамп faq.sql (в папке с приложением)
+   Если требуется меняем движок БД на [InnoDB](https://dev.mysql.com/doc/refman/8.0/en/storage-engine-setting.html), или используем дамп faq.sql (в папке с приложением)
 
 4. Создаем и настраиваем сайт.
 
