@@ -20,7 +20,7 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 ```
 
-Используем PHP 7.1 Для удобства  использования php composer прописываем alias. Для это в корне создаем файл .bash_profile и пишем туда
+Используем PHP 7.1 Для удобства  использования php и composer прописываем alias. Для это в корне создаем файл .bash_profile и пишем туда
 
 ```
 alias php='/opt/php71/bin/php -d memory_limit=256M'
