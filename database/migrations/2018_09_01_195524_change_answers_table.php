@@ -19,7 +19,7 @@ class ChangeAnswersTable extends Migration
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
 
             $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
