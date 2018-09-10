@@ -40,7 +40,7 @@ alias composer='/opt/php71/bin/php -d memory_limit=500M /home/ваша дире�
 1. Клонируем приложение в выбранную директорию
 
 ```
-git clone
+git clone https://github.com/SergeySadchikov/php_diplom
 ```
 
 2. Переходим в директорию и запускаем установку
